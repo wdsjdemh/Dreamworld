@@ -3,6 +3,8 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
 }
 
 header {
@@ -43,4 +45,12 @@ h1 {
 
 .server-info p {
     font-size: 18px;
+}
+
+/* 淡入淡出动画 */
+.fade-enter-active, .fade-leave-active {
+    transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to {
+    opacity: 0;
 }
