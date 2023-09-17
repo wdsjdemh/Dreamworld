@@ -44,3 +44,20 @@ h1 {
 .server-info p {
     font-size: 18px;
 }
+/* 在styles.css中添加 */
+.download-box {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.download-box a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+}
+
