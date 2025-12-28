@@ -6,6 +6,7 @@
     <title>DreamWorld Minecraft服务器</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #10B981;
@@ -274,10 +275,23 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            font-family: 'Monaco', 'Courier New', monospace;
+            font-family: 'JetBrains Mono', 'Monaco', 'Cascadia Code', 'Consolas', monospace;
             font-size: 1.25rem;
-            font-weight: 600;
+            font-weight: 500;
             color: var(--gray-900);
+            letter-spacing: 0.5px;
+        }
+
+        /* 优化IP地址字体样式 */
+        .ip-address {
+            font-family: 'JetBrains Mono', 'Monaco', 'Cascadia Code', 'Consolas', monospace;
+            font-weight: 500;
+            color: var(--gray-800);
+            background-color: var(--gray-100);
+            padding: 4px 8px;
+            border-radius: 4px;
+            letter-spacing: 0.5px;
+            border-left: 3px solid var(--primary);
         }
 
         .copy-btn {
@@ -460,7 +474,7 @@
             margin-bottom: 24px;
         }
 
-        /* 公告栏 */
+        /* 公告栏 - 修复滑动问题 */
         .announcements {
             margin: 96px 0;
         }
@@ -640,16 +654,30 @@
             color: var(--primary-dark);
         }
 
-        /* 纯CSS轮播实现 */
-        #announcement1:checked ~ .announcement-slider .announcement:nth-child(1),
-        #announcement2:checked ~ .announcement-slider .announcement:nth-child(2),
-        #announcement3:checked ~ .announcement-slider .announcement:nth-child(3) {
+        /* 修复轮播实现 - 使用CSS动画 */
+        .announcement-slider {
+            position: relative;
+            height: 360px;
+            overflow: hidden;
+        }
+
+        .announcement-slider .announcement {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        /* 通过:target伪类控制显示 */
+        #announcement1:target ~ .announcement-slider .announcement:nth-child(1),
+        #announcement2:target ~ .announcement-slider .announcement:nth-child(2) {
             opacity: 1;
         }
 
-        /* 隐藏单选按钮 */
-        .slider-radio {
-            display: none;
+        /* 默认显示第一个公告 */
+        .announcement-slider .announcement:first-child {
+            opacity: 1;
         }
 
         /* 页脚 */
@@ -880,7 +908,7 @@
                             <div class="server-address" id="serverAddress">
                                 <span class="address-label">服务器地址</span>
                                 <div class="address-value">
-                                    <span id="serverIpText">play.simpfun.cn:30808</span>
+                                    <span id="serverIpText" class="ip-address">play.simpfun.cn:30808</span>
                                     <button class="copy-btn" id="copyBtn">
                                         <i class="far fa-copy"></i> 复制地址
                                     </button>
@@ -1027,74 +1055,83 @@
             </div>
         </section>
         
-        <!-- 公告栏 -->
+        <!-- 公告栏 - 修复滑动问题 -->
         <section class="announcements container">
             <div class="section-title">
                 <h2>服务器公告</h2>
                 <p>最新服务器动态和重要通知</p>
             </div>
             
-            <!-- 使用单选按钮实现轮播 -->
-            <input type="radio" name="announcement" id="announcement1" class="slider-radio" checked>
-            <input type="radio" name="announcement" id="announcement2" class="slider-radio">
-            <input type="radio" name="announcement" id="announcement3" class="slider-radio">
-            
-            <div class="announcement-slider">
-                <div class="announcement">
-                    <div class="announcement-header">
-                        <h3>服务器维护通知</h3>
-                        <div class="announcement-date">2025年1月15日</div>
+            <!-- 使用锚点实现轮播 -->
+            <div class="announcement-container">
+                <div class="announcement-slider">
+                    <div class="announcement" id="announcement1-content">
+                        <div class="announcement-header">
+                            <h3>春节活动预告</h3>
+                            <div class="announcement-date">2025年1月10日</div>
+                        </div>
+                        <div class="announcement-content">
+                            <p>春节将至，DreamWorld服务器将举办一系列春节庆祝活动！</p>
+                            <p>活动时间：1月28日 - 2月12日</p>
+                            <p>活动内容：</p>
+                            <ul>
+                                <li>春节建筑大赛：建造最具春节特色的建筑，赢取丰厚奖励</li>
+                                <li>烟花汇演：除夕夜服务器将举办盛大的烟花表演</li>
+                                <li>红包派送：管理员将在游戏中随机派发红包</li>
+                                <li>年兽狩猎：击败年兽获得稀有物品</li>
+                            </ul>
+                            <p>更多活动详情请关注后续公告，祝大家游戏愉快！</p>
+                        </div>
                     </div>
-                    <div class="announcement-content">
-                        <p>为了提供更稳定的游戏体验，服务器将于1月20日（周一）上午10:00-12:00进行维护。维护期间将无法登录服务器，请各位玩家提前做好准备。</p>
-                        <p>维护内容：优化服务器性能，修复已知BUG，更新部分插件。</p>
-                        <p>维护结束后，我们将发放全服补偿礼包，感谢大家的理解与支持！</p>
+                    
+                    <div class="announcement" id="announcement2-content">
+                        <div class="announcement-header">
+                            <h3>新玩家指南更新</h3>
+                            <div class="announcement-date">2025年1月5日</div>
+                        </div>
+                        <div class="announcement-content">
+                            <p>我们更新了服务器的新玩家指南，帮助新加入的玩家更快熟悉服务器环境。</p>
+                            <p>更新内容：</p>
+                            <ul>
+                                <li>添加了基础指令教程</li>
+                                <li>完善了服务器规则说明</li>
+                                <li>增加了公共设施使用指南</li>
+                                <li>提供了常见问题解答</li>
+                            </ul>
+                            <p>新玩家可以在出生点的公告栏查看指南，也可以在官网的"帮助与指令"页面查看完整内容。</p>
+                            <p>如果您有任何建议或发现指南中有错误，欢迎通过管理员邮箱联系我们。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="announcement" id="announcement3-content">
+                        <div class="announcement-header">
+                            <h3>服务器更新公告</h3>
+                            <div class="announcement-date">2025年1月20日</div>
+                        </div>
+                        <div class="announcement-content">
+                            <p>服务器已完成最新版本更新，现在支持更多功能和优化！</p>
+                            <p>更新内容：</p>
+                            <ul>
+                                <li>新增多个公共设施，包括交通系统和共享农场</li>
+                                <li>优化服务器性能，提升游戏流畅度</li>
+                                <li>修复了已知的BUG和漏洞</li>
+                                <li>添加了新的游戏活动插件</li>
+                            </ul>
+                            <p>请确保您的客户端版本为JAVA 1.21.1以获得最佳体验。如有任何问题，请联系服务器管理员。</p>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="announcement">
-                    <div class="announcement-header">
-                        <h3>春节活动预告</h3>
-                        <div class="announcement-date">2025年1月10日</div>
-                    </div>
-                    <div class="announcement-content">
-                        <p>春节将至，DreamWorld服务器将举办一系列春节庆祝活动！</p>
-                        <p>活动时间：1月28日 - 2月12日</p>
-                        <p>活动内容：</p>
-                        <ul>
-                            <li>春节建筑大赛：建造最具春节特色的建筑，赢取丰厚奖励</li>
-                            <li>烟花汇演：除夕夜服务器将举办盛大的烟花表演</li>
-                            <li>红包派送：管理员将在游戏中随机派发红包</li>
-                            <li>年兽狩猎：击败年兽获得稀有物品</li>
-                        </ul>
-                        <p>更多活动详情请关注后续公告，祝大家游戏愉快！</p>
-                    </div>
+                <div class="slider-indicators">
+                    <a href="#announcement1" class="slider-indicator active"></a>
+                    <a href="#announcement2" class="slider-indicator"></a>
+                    <a href="#announcement3" class="slider-indicator"></a>
                 </div>
                 
-                <div class="announcement">
-                    <div class="announcement-header">
-                        <h3>新玩家指南更新</h3>
-                        <div class="announcement-date">2025年1月5日</div>
-                    </div>
-                    <div class="announcement-content">
-                        <p>我们更新了服务器的新玩家指南，帮助新加入的玩家更快熟悉服务器环境。</p>
-                        <p>更新内容：</p>
-                        <ul>
-                            <li>添加了基础指令教程</li>
-                            <li>完善了服务器规则说明</li>
-                            <li>增加了公共设施使用指南</li>
-                            <li>提供了常见问题解答</li>
-                        </ul>
-                        <p>新玩家可以在出生点的公告栏查看指南，也可以在官网的"帮助与指令"页面查看完整内容。</p>
-                        <p>如果您有任何建议或发现指南中有错误，欢迎通过管理员邮箱联系我们。</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="slider-indicators">
-                <label for="announcement1" class="slider-indicator active"></label>
-                <label for="announcement2" class="slider-indicator"></label>
-                <label for="announcement3" class="slider-indicator"></label>
+                <!-- 隐藏的锚点 -->
+                <div id="announcement1"></div>
+                <div id="announcement2"></div>
+                <div id="announcement3"></div>
             </div>
         </section>
     </main>
@@ -1122,7 +1159,7 @@
                 <div class="footer-section">
                     <h3>连接信息</h3>
                     <ul class="footer-links">
-                        <li><a><i class="fas fa-server"></i> play.simpfun.cn:30808</a></li>
+                        <li><a><i class="fas fa-server"></i> <span class="ip-address" style="background-color: transparent; border-left: none; padding: 0;">play.simpfun.cn:30808</span></a></li>
                         <li><a><i class="fas fa-code-branch"></i> JAVA 1.21.1</a></li>
                         <li><a><i class="fas fa-plug"></i> JAVA版 & 基岩版</a></li>
                         <li><a><i class="fas fa-exclamation-circle"></i> 背包不互通</a></li>
@@ -1217,44 +1254,48 @@
                 }
             });
             
-            // 自动轮播公告
-            let currentSlide = 1;
-            const totalSlides = 3;
-            const radioButtons = document.querySelectorAll('.slider-radio');
+            // 公告轮播功能
             const indicators = document.querySelectorAll('.slider-indicator');
+            const announcements = document.querySelectorAll('.announcement');
             
-            function nextSlide() {
-                currentSlide = currentSlide >= totalSlides ? 1 : currentSlide + 1;
-                document.getElementById(`announcement${currentSlide}`).checked = true;
-                
-                // 更新指示器
-                indicators.forEach((indicator, index) => {
-                    if (index === currentSlide - 1) {
+            // 设置轮播功能
+            function setActiveIndicator(index) {
+                indicators.forEach((indicator, i) => {
+                    if (i === index) {
                         indicator.classList.add('active');
+                        // 显示对应的公告
+                        announcements.forEach((announcement, j) => {
+                            if (j === index) {
+                                announcement.style.opacity = '1';
+                                announcement.style.zIndex = '1';
+                            } else {
+                                announcement.style.opacity = '0';
+                                announcement.style.zIndex = '0';
+                            }
+                        });
                     } else {
                         indicator.classList.remove('active');
                     }
                 });
             }
             
-            // 每10秒切换一次公告
-            setInterval(nextSlide, 10000);
-            
-            // 点击指示器时更新
+            // 点击指示器切换公告
             indicators.forEach((indicator, index) => {
-                indicator.addEventListener('click', () => {
-                    currentSlide = index + 1;
-                    
-                    // 更新指示器
-                    indicators.forEach((ind, i) => {
-                        if (i === index) {
-                            ind.classList.add('active');
-                        } else {
-                            ind.classList.remove('active');
-                        }
-                    });
+                indicator.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    setActiveIndicator(index);
                 });
             });
+            
+            // 自动轮播
+            let currentSlide = 0;
+            function nextSlide() {
+                currentSlide = (currentSlide + 1) % indicators.length;
+                setActiveIndicator(currentSlide);
+            }
+            
+            // 每8秒切换一次公告
+            setInterval(nextSlide, 8000);
             
             // 平滑滚动到特性部分
             document.querySelector('a[href="#features"]').addEventListener('click', function(e) {
