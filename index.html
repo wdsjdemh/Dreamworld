@@ -585,6 +585,37 @@
             line-height: 1.5;
         }
 
+        /* 纯 CSS 公告折叠 */
+details.announcement-container {
+    margin-bottom: 32px;
+}
+
+details > summary {
+    list-style: none;
+    cursor: pointer;
+}
+
+details > summary::-webkit-details-marker {
+    display: none;
+}
+
+details > summary::after {
+    content: "展开";
+    font-size: 0.875rem;
+    color: var(--primary);
+    margin-left: auto;
+}
+
+details[open] > summary::after {
+    content: "收起";
+}
+
+details > summary {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
         /* 网站导航卡片 */
         .site-navigation {
             margin: 80px 0;
