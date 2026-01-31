@@ -2,8 +2,8 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DreamWorld Minecraft服务器</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>DreamWorld Minecraft服务器 - 主页</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -25,12 +25,17 @@
             --gray-800: #1F2937;
             --gray-900: #111827;
             --white: #FFFFFF;
+            --warning: #F59E0B;
+            --warning-light: #FEF3C7;
+            --danger: #EF4444;
+            --danger-light: #FEE2E2;
             --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
             --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
             --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
             --radius: 12px;
             --radius-sm: 8px;
+            --radius-xs: 6px;
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -144,17 +149,81 @@
             cursor: pointer;
             padding: 8px;
             border-radius: var(--radius-sm);
+            text-decoration: none;
         }
 
         .mobile-menu-toggle:hover {
             background-color: var(--gray-100);
         }
 
-        /* 主要内容样式 */
-        main {
-            flex: 1;
+        /* 移动端导航菜单 */
+        #mobile-nav {
+            display: none;
+            background-color: var(--white);
+            border-top: 1px solid var(--gray-200);
+            padding: 16px;
+            position: absolute;
+            top: 72px;
+            left: 0;
+            right: 0;
+            box-shadow: var(--shadow-md);
+            z-index: 99;
         }
 
+        #mobile-nav:target {
+            display: block;
+        }
+
+        #mobile-nav ul {
+            flex-direction: column;
+            gap: 8px;
+            list-style: none;
+        }
+
+        #mobile-nav li {
+            width: 100%;
+        }
+
+        #mobile-nav a {
+            justify-content: flex-start;
+            padding: 12px 16px;
+            width: 100%;
+            border-radius: var(--radius-sm);
+            font-size: 1rem;
+            color: var(--gray-700);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: var(--transition);
+        }
+
+        #mobile-nav a:hover {
+            background-color: var(--gray-100);
+            color: var(--primary);
+        }
+
+        #mobile-nav .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--gray-600);
+            text-decoration: none;
+            border-radius: var(--radius-xs);
+        }
+
+        #mobile-nav .close-btn:hover {
+            background-color: var(--gray-100);
+            color: var(--danger);
+        }
+
+        /* 英雄区域样式 */
         .hero {
             padding: 96px 0 64px;
             position: relative;
@@ -188,7 +257,6 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            animation: fadeInUp 0.8s ease-out;
         }
 
         .hero p {
@@ -198,20 +266,18 @@
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
-            animation: fadeInUp 0.8s ease-out 0.2s both;
         }
 
-        /* 服务器IP展示样式 - 重新设计 */
+        /* 服务器连接卡片 */
         .server-connect-section {
             margin: 48px 0;
-            animation: fadeInUp 0.8s ease-out 0.4s both;
         }
 
         .server-connect-card {
-            background: linear-gradient(135deg, var(--white) 0%, var(--gray-50) 100%);
+            background-color: var(--white);
             border-radius: var(--radius);
             padding: 32px;
-            box-shadow: var(--shadow-lg);
+            box-shadow: var(--shadow);
             border: 1px solid var(--gray-200);
             max-width: 600px;
             margin: 0 auto;
@@ -248,19 +314,38 @@
             color: var(--gray-900);
         }
 
-        .server-address {
+        /* IP地址卡片样式 */
+        .ip-address-card {
             background-color: var(--white);
             border: 2px solid var(--gray-200);
             border-radius: var(--radius-sm);
             padding: 20px;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
             position: relative;
             transition: var(--transition);
         }
 
-        .server-address:hover {
+        .ip-address-card:hover {
             border-color: var(--primary);
             box-shadow: 0 0 0 3px var(--primary-light);
+        }
+
+        .ip-address-card.java {
+            border-color: var(--primary);
+        }
+
+        .ip-address-card.java:hover {
+            border-color: var(--primary-dark);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+
+        .ip-address-card.bedrock {
+            border-color: var(--secondary);
+        }
+
+        .ip-address-card.bedrock:hover {
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px var(--secondary-light);
         }
 
         .address-label {
@@ -275,44 +360,11 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            font-family: 'JetBrains Mono', 'Monaco', 'Cascadia Code', 'Consolas', monospace;
+            font-family: 'JetBrains Mono', monospace;
             font-size: 1.25rem;
             font-weight: 500;
             color: var(--gray-900);
             letter-spacing: 0.5px;
-        }
-
-        /* 优化IP地址字体样式 */
-        .ip-address {
-            font-family: 'JetBrains Mono', 'Monaco', 'Cascadia Code', 'Consolas', monospace;
-            font-weight: 500;
-            color: var(--gray-800);
-            background-color: var(--gray-100);
-            padding: 4px 8px;
-            border-radius: 4px;
-            letter-spacing: 0.5px;
-            border-left: 3px solid var(--primary);
-        }
-
-        .copy-btn {
-            background-color: var(--primary-light);
-            color: var(--primary);
-            border: none;
-            border-radius: var(--radius-sm);
-            padding: 8px 16px;
-            font-size: 0.875rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .copy-btn:hover {
-            background-color: var(--primary);
-            color: var(--white);
-            transform: translateY(-2px);
         }
 
         .server-details {
@@ -356,6 +408,7 @@
             color: var(--gray-600);
         }
 
+        /* 主要按钮样式 */
         .btn {
             display: inline-flex;
             align-items: center;
@@ -370,7 +423,6 @@
             border: none;
             cursor: pointer;
             box-shadow: var(--shadow);
-            animation: fadeInUp 0.8s ease-out 0.6s both;
         }
 
         .btn:hover {
@@ -390,6 +442,7 @@
             border-color: var(--gray-400);
         }
 
+        /* 部分标题样式 */
         .section-title {
             text-align: center;
             margin-bottom: 48px;
@@ -474,47 +527,29 @@
             margin-bottom: 24px;
         }
 
-        /* 公告栏 - 修复滑动问题 */
+        /* 公告栏 */
         .announcements {
             margin: 96px 0;
         }
 
-        .announcement-slider {
-            position: relative;
-            height: 360px;
-            overflow: hidden;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
+        .announcement-container {
             background-color: var(--white);
-        }
-
-        .announcement {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-            padding: 40px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .announcement.active {
-            opacity: 1;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--gray-200);
         }
 
         .announcement-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--gray-200);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 24px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid var(--gray-200);
+            background-color: var(--gray-50);
         }
 
-        .announcement h3 {
+        .announcement-header h3 {
             font-size: 1.5rem;
             font-weight: 600;
             color: var(--gray-900);
@@ -523,20 +558,20 @@
         .announcement-date {
             font-size: 0.875rem;
             color: var(--gray-500);
-            background-color: var(--gray-100);
+            background-color: var(--white);
             padding: 6px 12px;
             border-radius: var(--radius-sm);
+            border: 1px solid var(--gray-200);
         }
 
         .announcement-content {
-            flex: 1;
-            overflow-y: auto;
-            padding-right: 16px;
+            padding: 32px;
         }
 
         .announcement-content p {
             margin-bottom: 16px;
             color: var(--gray-700);
+            line-height: 1.7;
         }
 
         .announcement-content ul {
@@ -547,32 +582,7 @@
         .announcement-content li {
             margin-bottom: 8px;
             color: var(--gray-700);
-        }
-
-        /* 轮播指示器 */
-        .slider-indicators {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            margin-top: 24px;
-        }
-
-        .slider-indicator {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background-color: var(--gray-300);
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .slider-indicator.active {
-            background-color: var(--primary);
-            transform: scale(1.2);
-        }
-
-        .slider-indicator:hover {
-            background-color: var(--primary-dark);
+            line-height: 1.5;
         }
 
         /* 网站导航卡片 */
@@ -654,30 +664,44 @@
             color: var(--primary-dark);
         }
 
-        /* 修复轮播实现 - 使用CSS动画 */
-        .announcement-slider {
-            position: relative;
-            height: 360px;
-            overflow: hidden;
+        /* 重要提醒样式 */
+        .important-note {
+            background: linear-gradient(135deg, var(--warning-light) 0%, var(--primary-light) 100%);
+            border-radius: var(--radius);
+            padding: 24px;
+            margin: 48px 0;
+            border-left: 5px solid var(--warning);
         }
 
-        .announcement-slider .announcement {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            transition: opacity 0.5s ease;
+        .important-note h4 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        /* 通过:target伪类控制显示 */
-        #announcement1:target ~ .announcement-slider .announcement:nth-child(1),
-        #announcement2:target ~ .announcement-slider .announcement:nth-child(2) {
-            opacity: 1;
+        .important-note h4 i {
+            color: var(--warning);
         }
 
-        /* 默认显示第一个公告 */
-        .announcement-slider .announcement:first-child {
-            opacity: 1;
+        .important-note p {
+            font-size: 0.875rem;
+            color: var(--gray-700);
+            margin-bottom: 8px;
+        }
+
+        .important-note ul {
+            margin-left: 20px;
+            margin-top: 12px;
+        }
+
+        .important-note li {
+            margin-bottom: 8px;
+            color: var(--gray-700);
+            line-height: 1.5;
         }
 
         /* 页脚 */
@@ -732,27 +756,6 @@
             font-size: 0.875rem;
         }
 
-        /* 动画 */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
-        }
-
         /* 响应式设计 */
         @media (max-width: 1024px) {
             .hero h2 {
@@ -769,33 +772,8 @@
                 display: block;
             }
             
-            nav {
-                position: fixed;
-                top: 64px;
-                left: 0;
-                width: 100%;
-                background-color: var(--white);
-                box-shadow: var(--shadow-md);
-                padding: 16px;
-                transform: translateY(-100%);
-                opacity: 0;
-                transition: var(--transition);
-                z-index: 99;
-            }
-            
-            nav.active {
-                transform: translateY(0);
-                opacity: 1;
-            }
-            
-            nav ul {
-                flex-direction: column;
-                gap: 8px;
-            }
-            
-            nav a {
-                justify-content: flex-start;
-                padding: 12px 16px;
+            #desktop-nav {
+                display: none;
             }
             
             .hero {
@@ -829,16 +807,14 @@
                 gap: 24px;
             }
             
-            .announcement-slider {
-                height: 420px;
-            }
-            
-            .announcement {
-                padding: 24px;
-            }
-            
             .nav-cards {
                 grid-template-columns: 1fr;
+            }
+        }
+
+        @media (min-width: 769px) {
+            #mobile-nav {
+                display: none !important;
             }
         }
 
@@ -871,11 +847,12 @@
                 </div>
             </a>
             
-            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+            <a href="#mobile-nav" class="mobile-menu-toggle" aria-label="打开菜单">
                 <i class="fas fa-bars"></i>
-            </button>
+            </a>
             
-            <nav id="mainNav">
+            <!-- 桌面导航 -->
+            <nav id="desktop-nav">
                 <ul>
                     <li><a href="https://dreamworld.eu.org" class="active"><i class="fas fa-home"></i> 主页</a></li>
                     <li><a href="https://rules.dreamworld.eu.org"><i class="fas fa-scroll"></i> 玩家守则</a></li>
@@ -887,6 +864,21 @@
             </nav>
         </div>
     </header>
+
+    <!-- 移动端导航菜单 -->
+    <div id="mobile-nav">
+        <a href="#" class="close-btn" aria-label="关闭菜单">
+            <i class="fas fa-times"></i>
+        </a>
+        <ul>
+            <li><a href="https://dreamworld.eu.org" class="active"><i class="fas fa-home"></i> 主页</a></li>
+            <li><a href="https://rules.dreamworld.eu.org"><i class="fas fa-scroll"></i> 玩家守则</a></li>
+            <li><a href="https://help.dreamworld.eu.org"><i class="fas fa-question-circle"></i> 帮助与指令</a></li>
+            <li><a href="https://banlist.dreamworld.eu.org"><i class="fas fa-gavel"></i> 封神榜</a></li>
+            <li><a href="https://public.dreamworld.eu.org"><i class="fas fa-city"></i> 公共设施</a></li>
+            <li><a href="https://download.dreamworld.eu.org"><i class="fas fa-download"></i> 下载中心</a></li>
+        </ul>
+    </div>
 
     <!-- 主内容区域 -->
     <main>
@@ -905,13 +897,19 @@
                                 <h3>连接服务器</h3>
                             </div>
                             
-                            <div class="server-address" id="serverAddress">
-                                <span class="address-label">服务器地址</span>
+                            <!-- JAVA版IP -->
+                            <div class="ip-address-card java">
+                                <span class="address-label">JAVA版服务器地址</span>
                                 <div class="address-value">
-                                    <span id="serverIpText" class="ip-address">mc.dreamworld.eu.org</span>
-                                    <button class="copy-btn" id="copyBtn">
-                                        <i class="far fa-copy"></i> 复制地址
-                                    </button>
+                                    <span style="font-family: 'JetBrains Mono', monospace; font-weight: 500; color: var(--primary-dark);">mc.dreamworld.eu.org</span>
+                                </div>
+                            </div>
+                            
+                            <!-- 基岩版IP -->
+                            <div class="ip-address-card bedrock">
+                                <span class="address-label">基岩版服务器地址</span>
+                                <div class="address-value">
+                                    <span style="font-family: 'JetBrains Mono', monospace; font-weight: 500; color: var(--secondary);">play.simpfun.cn:30808</span>
                                 </div>
                             </div>
                             
@@ -990,6 +988,32 @@
             </div>
         </section>
         
+        <!-- 公告栏 -->
+        <section class="announcements container">
+            <div class="section-title">
+                <h2>服务器公告</h2>
+                <p>最新服务器动态和重要通知</p>
+            </div>
+            
+            <div class="announcement-container">
+                <div class="announcement-header">
+                    <h3>2026年1月31日更新</h3>
+                    <div class="announcement-date">2026年1月31日</div>
+                </div>
+                <div class="announcement-content">
+                    <p>欢迎来到 DreamWorld Minecraft 服务器！以下是本次更新的主要内容：</p>
+                    <ul>
+                        <li><strong>服务器IP更新</strong>：基岩版玩家请使用新地址 <code style="font-family: 'JetBrains Mono', monospace; background: var(--gray-200); padding: 2px 6px; border-radius: 4px;">play.simpfun.cn:30808</code></li>
+                        <li><strong>JAVA版地址</strong>：JAVA版玩家请使用 <code style="font-family: 'JetBrains Mono', monospace; background: var(--gray-200); padding: 2px 6px; border-radius: 4px;">mc.dreamworld.eu.org</code></li>
+                        <li><strong>版本支持</strong>：服务器现已支持 JAVA 1.21.1 和基岩版互通</li>
+                        <li><strong>服务器规则</strong>：请所有玩家在游戏前仔细阅读玩家守则</li>
+                        <li><strong>挖矿规则</strong>：禁止在主世界挖矿，所有挖矿活动请在资源世界进行</li>
+                    </ul>
+                    <p>感谢所有玩家的支持，祝大家在 DreamWorld 玩得开心！</p>
+                </div>
+            </div>
+        </section>
+        
         <!-- 网站导航 -->
         <section class="site-navigation container">
             <div class="section-title">
@@ -1055,78 +1079,17 @@
             </div>
         </section>
         
-        <!-- 公告栏 - 修复滑动问题 -->
-        <section class="announcements container">
-            <div class="section-title">
-                <h2>服务器公告</h2>
-                <p>最新服务器动态和重要通知</p>
+        <!-- 重要提醒 -->
+        <div class="container">
+            <div class="important-note">
+                <h4><i class="fas fa-bullhorn"></i> 重要提醒</h4>
+                <p><strong>服务器地址：</strong> JAVA版玩家请使用 <strong>mc.dreamworld.eu.org</strong>，基岩版玩家请使用 <strong>play.simpfun.cn:30808</strong>。</p>
+                <p><strong>版本要求：</strong> 请确保您的客户端版本为 JAVA 1.21.1 以获得最佳体验。</p>
+                <p><strong>玩家守则：</strong> 请所有玩家在加入服务器前仔细阅读玩家守则，违规行为将受到相应处罚。</p>
+                <p><strong>挖矿规则：</strong> 禁止在主世界挖矿，所有挖矿活动请在资源世界进行，违者将受到处罚。</p>
+                <p><strong>问题反馈：</strong> 如遇到游戏问题或需要帮助，请访问帮助与指令页面或联系管理员。</p>
             </div>
-            
-            <!-- 使用锚点实现轮播 -->
-            <div class="announcement-container">
-                <div class="announcement-slider">
-                    <div class="announcement" id="announcement1-content">
-                        <div class="announcement-header">
-                            <h3>春节活动预告</h3>
-                            <div class="announcement-date">2026年2月16日</div>
-                        </div>
-                        <div class="announcement-content">
-                            <p>春节将至，DreamWorld服务器将举办一系列春节庆祝活动！</p>
-                            <p>活动时间：2月16日 - 2月17日</p>
-                            <p>活动内容：</p>
-                            <ul>
-                                <li>春节建筑大赛：建造最具春节特色的建筑，赢取丰厚奖励</li>
-                                <li>烟花汇演：除夕夜服务器将举办盛大的烟花表演</li>
-                                <li>红包派送：管理员将在游戏中随机派发红包</li>
-                            </ul>
-                            <p>更多活动详情请关注后续公告，祝大家游戏愉快！</p>
-                        </div>
-                    </div>
-                    
-                    <div class="announcement" id="announcement2-content">
-                        <div class="announcement-header">
-                            <h3>BUG修复</h3>
-                            <div class="announcement-date">2026年1月27日</div>
-                        </div>
-                        <div class="announcement-content">
-                            <p>我们修复了主世界无法刷怪的问题。</p>
-                            <p>更新内容：</p>
-                            <ul>
-                                <li>主世界难度为困难</li>
-                                <li>资源世界难度改为和平</li>
-
-                        </div>
-                    </div>
-                    
-                    <div class="announcement" id="announcement3-content">
-                        <div class="announcement-header">
-                            <h3>服务器更新公告</h3>
-                            <div class="announcement-date">2025年1月20日</div>
-                        </div>
-                        <div class="announcement-content">
-                            <p>服务器即将在寒假升级为1.21.11，请玩家们准备好！</p>
-                            <p>更新内容：</p>
-                            <ul>
-                                <li>互通插件现已修复</li>
-                                <li>优化服务器性能（寒假将升级为9950x），提升游戏流畅度</li>
-                            </ul>
-                            <p>请确保您的客户端版本为JAVA 1.21.11以获得最佳体验。如有任何问题，请联系服务器管理员。</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="slider-indicators">
-                    <a href="#announcement1" class="slider-indicator active"></a>
-                    <a href="#announcement2" class="slider-indicator"></a>
-                    <a href="#announcement3" class="slider-indicator"></a>
-                </div>
-                
-                <!-- 隐藏的锚点 -->
-                <div id="announcement1"></div>
-                <div id="announcement2"></div>
-                <div id="announcement3"></div>
-            </div>
-        </section>
+        </div>
     </main>
 
     <!-- 页脚 -->
@@ -1153,9 +1116,10 @@
                 <div class="footer-section">
                     <h3>连接信息</h3>
                     <ul class="footer-links">
-                        <li><a><i class="fas fa-server"></i> <span class="ip-address" style="background-color: transparent; border-left: none; padding: 0;">play.simpfun.cn:30808</span></a></li>
-                        <li><a><i class="fas fa-code-branch"></i> JAVA 1.21.1</a></li>
-                        <li><a><i class="fas fa-plug"></i> JAVA版 & 基岩版</a></li>
+                        <li><a><i class="fas fa-gamepad"></i> <span style="font-family: 'JetBrains Mono', monospace; color: var(--gray-300);">JAVA版: mc.dreamworld.eu.org</span></a></li>
+                        <li><a><i class="fas fa-mobile-alt"></i> <span style="font-family: 'JetBrains Mono', monospace; color: var(--gray-300);">基岩版: play.simpfun.cn:30808</span></a></li>
+                        <li><a><i class="fas fa-code-branch"></i> 版本: JAVA 1.21.1</a></li>
+                        <li><a><i class="fas fa-plug"></i> 支持: JAVA版 & 基岩版互通</a></li>
                     </ul>
                 </div>
             </div>
@@ -1163,9 +1127,9 @@
             <div class="copyright">
                 <p>&copy; 2025-2026 DreamWorld Minecraft服务器 版权所有</p>
                 <p style="margin-top: 8px;">本服务器与Mojang Studios没有官方关联。Minecraft是Mojang Studios的商标。</p>
+                <p style="margin-top: 8px;">最后更新：2026年1月31日</p>
             </div>
         </div>
     </footer>
-
 </body>
 </html>
