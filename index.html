@@ -586,35 +586,35 @@
         }
 
         /* 纯 CSS 公告折叠 */
-details.announcement-container {
-    margin-bottom: 32px;
-}
+        details.announcement-container {
+            margin-bottom: 32px;
+        }
 
-details > summary {
-    list-style: none;
-    cursor: pointer;
-}
+        details > summary {
+            list-style: none;
+            cursor: pointer;
+        }
 
-details > summary::-webkit-details-marker {
-    display: none;
-}
+        details > summary::-webkit-details-marker {
+            display: none;
+        }
 
-details > summary::after {
-    content: "展开";
-    font-size: 0.875rem;
-    color: var(--primary);
-    margin-left: auto;
-}
+        details > summary::after {
+            content: "展开";
+            font-size: 0.875rem;
+            color: var(--primary);
+            margin-left: auto;
+        }
 
-details[open] > summary::after {
-    content: "收起";
-}
+        details[open] > summary::after {
+            content: "收起";
+        }
 
-details > summary {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-}
+        details > summary {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
 
         /* 网站导航卡片 */
         .site-navigation {
@@ -787,6 +787,221 @@ details > summary {
             font-size: 0.875rem;
         }
 
+        /* 新增：选项卡样式 */
+        .tab-container {
+            margin: 80px auto;
+            max-width: 900px;
+        }
+        
+        .tab-header {
+            display: flex;
+            border-bottom: 2px solid var(--gray-200);
+            margin-bottom: 0;
+            overflow-x: auto;
+            scrollbar-width: none; /* Firefox */
+        }
+        
+        .tab-header::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+        
+        .tab-button {
+            padding: 16px 24px;
+            background: none;
+            border: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--gray-600);
+            cursor: pointer;
+            position: relative;
+            transition: var(--transition);
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+        
+        .tab-button:hover {
+            color: var(--primary);
+            background-color: var(--gray-50);
+        }
+        
+        .tab-content {
+            display: none;
+            background-color: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 32px;
+            border: 1px solid var(--gray-200);
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .tab-content h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .tab-content h3 i {
+            color: var(--primary);
+        }
+        
+        .tab-content p {
+            color: var(--gray-600);
+            margin-bottom: 24px;
+            line-height: 1.7;
+        }
+        
+        .tab-link-card {
+            background-color: var(--gray-50);
+            border-radius: var(--radius-sm);
+            padding: 24px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .tab-link-card h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .tab-link-card h4 i {
+            color: var(--primary);
+        }
+        
+        .tab-link-card p {
+            color: var(--gray-600);
+            margin-bottom: 16px;
+            font-size: 0.95rem;
+        }
+        
+        .tab-link-url {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background-color: var(--white);
+            padding: 12px 20px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--gray-300);
+            color: var(--primary);
+            text-decoration: none;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+        
+        .tab-link-url:hover {
+            background-color: var(--primary-light);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.1);
+        }
+        
+        .tab-link-url i {
+            font-size: 1.1rem;
+        }
+        
+        .tab-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-top: 32px;
+        }
+        
+        .tab-feature {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        
+        .tab-feature i {
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-top: 2px;
+        }
+        
+        .tab-feature span {
+            color: var(--gray-700);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* 使用:target伪类实现纯CSS选项卡切换 */
+        /* 默认显示第一个选项卡 */
+        #map-tab {
+            display: block;
+        }
+        
+        /* 隐藏所有选项卡 */
+        .tab-content {
+            display: none;
+        }
+        
+        /* 当某个选项卡被定位时显示 */
+        #map-tab:target,
+        #status-tab:target,
+        #resources-tab:target {
+            display: block;
+        }
+        
+        /* 当某个选项卡被定位时，隐藏默认显示的第一个 */
+        #status-tab:target ~ #map-tab,
+        #resources-tab:target ~ #map-tab {
+            display: none;
+        }
+        
+        /* 更新选项卡按钮的激活状态 */
+        .tab-button[href="#map-tab"] {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .tab-button[href="#map-tab"]::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background-color: var(--primary);
+            border-radius: 2px 2px 0 0;
+        }
+        
+        /* 当对应的选项卡被激活时，改变按钮样式 */
+        #status-tab:target ~ .tab-header .tab-button[href="#status-tab"],
+        #resources-tab:target ~ .tab-header .tab-button[href="#resources-tab"] {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        #status-tab:target ~ .tab-header .tab-button[href="#status-tab"]::after,
+        #resources-tab:target ~ .tab-header .tab-button[href="#resources-tab"]::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background-color: var(--primary);
+            border-radius: 2px 2px 0 0;
+        }
+
         /* 响应式设计 */
         @media (max-width: 1024px) {
             .hero h2 {
@@ -839,6 +1054,23 @@ details > summary {
             }
             
             .nav-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .tab-container {
+                margin: 48px auto;
+            }
+            
+            .tab-button {
+                padding: 14px 20px;
+                font-size: 0.95rem;
+            }
+            
+            .tab-content {
+                padding: 24px;
+            }
+            
+            .tab-features {
                 grid-template-columns: 1fr;
             }
         }
@@ -1020,67 +1252,148 @@ details > summary {
         </section>
         
         <!-- 公告栏 -->
-       <!-- 公告栏 -->
-<section class="announcements container">
-    <div class="section-title">
-        <h2>服务器公告</h2>
-        <p>最新服务器动态和重要通知</p>
-    </div>
+        <section class="announcements container">
+            <div class="section-title">
+                <h2>服务器公告</h2>
+                <p>最新服务器动态和重要通知</p>
+            </div>
 
-    <!-- 公告 1：春节活动 -->
-    <div class="announcement-container">
-        <div class="announcement-header">
-            <h3>春节活动预告</h3>
-            <div class="announcement-date">2026年2月16日</div>
-        </div>
-        <div class="announcement-content">
-            <p>春节将至，DreamWorld 服务器将举办一系列春节庆祝活动！</p>
-            <p><strong>活动时间：</strong>2月16日 - 2月17日</p>
-            <p><strong>活动内容：</strong></p>
-            <ul>
-                <li>春节建筑大赛：建造最具春节特色的建筑，赢取丰厚奖励</li>
-                <li>烟花汇演：除夕夜服务器将举办盛大的烟花表演</li>
-                <li>红包派送：管理员将在游戏中随机派发红包</li>
-            </ul>
-            <p>更多活动详情请关注后续公告，祝大家游戏愉快！</p>
-        </div>
-    </div>
+            <!-- 公告 1：春节活动 -->
+            <div class="announcement-container">
+                <div class="announcement-header">
+                    <h3>春节活动预告</h3>
+                    <div class="announcement-date">2026年2月16日</div>
+                </div>
+                <div class="announcement-content">
+                    <p>春节将至，DreamWorld 服务器将举办一系列春节庆祝活动！</p>
+                    <p><strong>活动时间：</strong>2月16日 - 2月17日</p>
+                    <p><strong>活动内容：</strong></p>
+                    <ul>
+                        <li>春节建筑大赛：建造最具春节特色的建筑，赢取丰厚奖励</li>
+                        <li>烟花汇演：除夕夜服务器将举办盛大的烟花表演</li>
+                        <li>红包派送：管理员将在游戏中随机派发红包</li>
+                    </ul>
+                    <p>更多活动详情请关注后续公告，祝大家游戏愉快！</p>
+                </div>
+            </div>
 
-    <!-- 公告 2：BUG 修复 -->
-    <div class="announcement-container" style="margin-top: 32px;">
-        <div class="announcement-header">
-            <h3>BUG 修复公告</h3>
-            <div class="announcement-date">2026年1月27日</div>
-        </div>
-        <div class="announcement-content">
-            <p>我们修复了主世界无法刷怪的问题。</p>
-            <p><strong>更新内容：</strong></p>
-            <ul>
-                <li>主世界难度调整为：困难</li>
-                <li>资源世界难度调整为：和平</li>
-            </ul>
-        </div>
-    </div>
+            <!-- 公告 2：BUG 修复 -->
+            <div class="announcement-container" style="margin-top: 32px;">
+                <div class="announcement-header">
+                    <h3>BUG 修复公告</h3>
+                    <div class="announcement-date">2026年1月27日</div>
+                </div>
+                <div class="announcement-content">
+                    <p>我们修复了主世界无法刷怪的问题。</p>
+                    <p><strong>更新内容：</strong></p>
+                    <ul>
+                        <li>主世界难度调整为：困难</li>
+                        <li>资源世界难度调整为：和平</li>
+                    </ul>
+                </div>
+            </div>
 
-    <!-- 公告 3：服务器更新 -->
-    <div class="announcement-container" style="margin-top: 32px;">
-        <div class="announcement-header">
-            <h3>服务器更新公告</h3>
-            <div class="announcement-date">2026年1月20日</div>
-        </div>
-        <div class="announcement-content">
-            <p>服务器将在寒假期间升级至 <strong>1.21.11</strong>，请玩家们提前准备。</p>
-            <p><strong>更新内容：</strong></p>
-            <ul>
-                <li>互通插件已修复</li>
-                <li>服务器硬件升级（寒假将升级为 9950X），显著提升流畅度</li>
-                <li>服务器qq群：1076277210</li>
-            </ul>
-            <p>请确保您的客户端版本为 <strong>JAVA 1.21.11</strong> 以获得最佳体验。如有问题请联系管理员。</p>
-        </div>
-    </div>
-</section>
-
+            <!-- 公告 3：服务器更新 -->
+            <div class="announcement-container" style="margin-top: 32px;">
+                <div class="announcement-header">
+                    <h3>服务器更新公告</h3>
+                    <div class="announcement-date">2026年1月20日</div>
+                </div>
+                <div class="announcement-content">
+                    <p>服务器将在寒假期间升级至 <strong>1.21.11</strong>，请玩家们提前准备。</p>
+                    <p><strong>更新内容：</strong></p>
+                    <ul>
+                        <li>互通插件已修复</li>
+                        <li>服务器硬件升级（寒假将升级为 9950X），显著提升流畅度</li>
+                        <li>服务器qq群：1076277210</li>
+                    </ul>
+                    <p>请确保您的客户端版本为 <strong>JAVA 1.21.11</strong> 以获得最佳体验。如有问题请联系管理员。</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 新增：选项卡区域 -->
+        <section class="tab-container container">
+            <div class="section-title">
+                <h2>服务器工具</h2>
+                <p>探索服务器的各种实用工具和资源</p>
+            </div>
+            
+            <div class="tab-header">
+                <a href="#map-tab" class="tab-button">
+                    <i class="fas fa-map"></i> 网页地图
+                </a>
+                <a href="#status-tab" class="tab-button">
+                    <i class="fas fa-server"></i> 服务器状态
+                </a>
+                <a href="#resources-tab" class="tab-button">
+                    <i class="fas fa-box-open"></i> 资源中心
+                </a>
+            </div>
+            
+            <!-- 网页地图选项卡 -->
+            <div id="map-tab" class="tab-content">
+                <h3><i class="fas fa-map-marked-alt"></i> 实时网页地图</h3>
+                <p>探索服务器世界的实时地图，查看建筑位置、玩家分布和地形信息。地图会定期更新，显示最新的世界状态。</p>
+                
+                <div class="tab-link-card">
+                    <h4><i class="fas fa-globe"></i> 服务器实时地图</h4>
+                    <p>点击下方链接访问服务器实时地图，可以在浏览器中查看服务器世界的实时状态，包括地形、建筑和玩家位置。</p>
+                    <a href="http://play.simpfun.cn:32932/" target="_blank" class="tab-link-url">
+                        <i class="fas fa-external-link-alt"></i>
+                        <span>http://play.simpfun.cn:32932/</span>
+                    </a>
+                </div>
+                
+                <div class="tab-features">
+                    <div class="tab-feature">
+                        <i class="fas fa-sync-alt"></i>
+                        <span>地图实时更新，显示最新世界状态</span>
+                    </div>
+                    <div class="tab-feature">
+                        <i class="fas fa-user-friends"></i>
+                        <span>查看在线玩家位置和活动范围</span>
+                    </div>
+                    <div class="tab-feature">
+                        <i class="fas fa-layer-group"></i>
+                        <span>支持多种地图图层和缩放级别</span>
+                    </div>
+                    <div class="tab-feature">
+                        <i class="fas fa-search-location"></i>
+                        <span>快速搜索特定地点和坐标</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 服务器状态选项卡 -->
+            <div id="status-tab" class="tab-content">
+                <h3><i class="fas fa-chart-line"></i> 服务器状态监控</h3>
+                <p>查看服务器的实时状态信息，包括在线玩家、服务器性能和运行时间等数据。</p>
+                
+                <div class="tab-link-card">
+                    <h4><i class="fas fa-tachometer-alt"></i> 服务器性能监控</h4>
+                    <p>服务器状态监控功能正在开发中，即将上线。当前可通过网页地图查看部分服务器信息。</p>
+                    <div style="padding: 16px; background-color: var(--gray-100); border-radius: var(--radius-sm); margin-top: 16px;">
+                        <p style="color: var(--gray-600); margin-bottom: 0;">功能即将上线，敬请期待！</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 资源中心选项卡 -->
+            <div id="resources-tab" class="tab-content">
+                <h3><i class="fas fa-download"></i> 资源下载中心</h3>
+                <p>下载服务器相关的资源文件，包括地图存档、资源包和游戏工具等。</p>
+                
+                <div class="tab-link-card">
+                    <h4><i class="fas fa-map"></i> 服务器地图下载</h4>
+                    <p>访问下载中心获取服务器地图备份和其他资源文件。</p>
+                    <a href="https://download.dreamworld.eu.org" target="_blank" class="tab-link-url">
+                        <i class="fas fa-external-link-alt"></i>
+                        <span>https://download.dreamworld.eu.org</span>
+                    </a>
+                </div>
+            </div>
+        </section>
         
         <!-- 网站导航 -->
         <section class="site-navigation container">
@@ -1195,7 +1508,7 @@ details > summary {
             <div class="copyright">
                 <p>&copy; 2025-2026 DreamWorld Minecraft服务器 版权所有</p>
                 <p style="margin-top: 8px;">本服务器与Mojang Studios没有官方关联。Minecraft是Mojang Studios的商标。</p>
-                <p style="margin-top: 8px;">最后更新：2026年1月31日</p>
+                <p style="margin-top: 8px;">最后更新：2026年2月6日</p>
             </div>
         </div>
     </footer>
